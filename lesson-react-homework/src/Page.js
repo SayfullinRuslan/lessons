@@ -1,29 +1,44 @@
+import React, { useState, useRef} from 'react';
 import './Page.css';
 
 const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const button_yes_click = () => {
+const handleButtonYesClick = () => {
     alert("Одобряю!!!)")
   }
-  
-const button_no_mouse_over = () => {
-    const button_no = document.getElementsByClassName("window__button-no")[0];
-    button_no.style.left = getRandomInt(0, 25) + "rem";
-    button_no.style.top = getRandomInt(0, 18) + "rem";
-  }
 
-export const Page = () => <div className="window">
-    Вы согласны работать бесплатно?
-    <button 
-      className="window__button-yes"
-      onClick={button_yes_click}>
-      Да
-    </button>
-    <button 
-      className="window__button-no"
-      onMouseOver={button_no_mouse_over}>
-      Нет
-    </button>    
-  </div>
+export const Page = () => {
+
+    return(
+        <div className="window">
+            Вы согласны работать бесплатно?
+            <button 
+                className="window__button-yes"
+                onClick={handleButtonYesClick}>
+                Да
+            </button>
+            {<ButtonNo />}
+ 
+        </div>
+    );
+}
+
+const ButtonNo = () => {
+    const propDOM = useRef(null);
+
+    const handleButtonOnMouseOver = () => {
+        propDOM.current.style = "left: " + getRandomInt(0, 25) + 
+        "rem; top: " + getRandomInt(0, 18) + "rem"
+      }
+
+    return (
+        <button 
+            className="window__button-no"
+            onMouseOver={handleButtonOnMouseOver}
+            ref = {propDOM}>
+            Нет
+        </button>
+    );
+}
